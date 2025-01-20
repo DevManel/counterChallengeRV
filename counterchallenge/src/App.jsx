@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+function Counter() {
+  // Déclaration du state pour le compteur
+  const [count, setCount] = React.useState(0);
+  const [warning, setWarning] = React.useState(false); // Pour gérer l'affichage du message d'avertissement
+
+  // Fonction pour incrémenter le compteur
+  const increment = () => {
+    setCount(count + 1);
+    setWarning(false); // Réinitialise l'avertissement si l'utilisateur incrémente
+  };
+
+  // Fonction pour décrémenter le compteur
+  const decrement = () => {
+    if (count > 0) {
+      setCount(count - 1);
+      setWarning(false); // Réinitialise l'avertissement si le compteur est valide
+    } else {
+      setWarning(true); // Affiche un message d'avertissement si l'utilisateur tente de décrémenter en dessous de 0
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div style={{ textAlign: "center", marginTop: "20px" }}>
+      <h1>Compteur : {count}</h1>
+
+      {/* Boutons pour incrémenter et décrémenter */}
+      <button onClick={increment}>+1</button>
+      <button onClick={decrement}>-1</button>
+
+      {/* Affichage du message d'avertissement si nécessaire */}
+      {warning && <p style={{ color: "red", fontWeight: "bold" }}>Attention : Vous ne pouvez pas descendre en dessous de 0 !</p>}
+    </div>
+  );
 }
 
-export default App
+function App() {
+  return (
+    <div>
+      <Counter />
+    </div>
+  );
+}
+
+export default App;
